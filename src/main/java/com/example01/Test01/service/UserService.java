@@ -31,17 +31,32 @@ public class UserService {
     public void setUserRepo(userRepo userRepo) {
         this.userRepo = userRepo;
     }
-public List<UserDTO> getAllUser(){
-       List<User>  userList=userRepo.findAll();
-       return modelMapper.map(userList,new TypeToken<>(){}.getType());
-}
-public UserDTO updateUser(UserDTO userDTO){
-userRepo.save(modelMapper.map(userDTO,User.class));
-return  userDTO;
-}
 
-public boolean deleteUser(UserDTO userDTO){
-        userRepo.delete(modelMapper.map(userDTO,User.class));
+    public List<UserDTO> getAllUser() {
+        List<User> userList = userRepo.findAll();
+        return modelMapper.map(userList, new TypeToken<>() {
+        }.getType());
+    }
+
+    public UserDTO updateUser(UserDTO userDTO) {
+        userRepo.save(modelMapper.map(userDTO, User.class));
+        return userDTO;
+    }
+
+    public boolean deleteUser(UserDTO userDTO) {
+        userRepo.delete(modelMapper.map(userDTO, User.class));
         return true;
-}
+    }
+
+    //user id> user details
+
+    public UserDTO getUserByUserID(String userId) {
+        User user = userRepo.getUserByUserID(userId);
+        return modelMapper.map(user, UserDTO.class);
+    }
+
+    public  UserDTO getUserByUserAndAddress(String userId,String address){
+       User user= userRepo.getUserByIdAndAddress(userId,address);
+       return modelMapper.map(user,UserDTO.class);
+    }
 }
